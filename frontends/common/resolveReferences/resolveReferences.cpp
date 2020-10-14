@@ -159,6 +159,7 @@ ResolutionContext::resolve(IR::ID name, P4::ResolutionType type, bool forwardOK)
                 };
                 decls = decls->where(locationFilter);
             }
+
             auto vector = decls->toVector();
             if (!vector->empty()) {
                 LOG3("Resolved in " << dbp(current->getNode()));

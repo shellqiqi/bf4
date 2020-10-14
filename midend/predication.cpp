@@ -35,7 +35,7 @@ public:
   }
 };
 
-const IR::Expression *Predication::clone(const IR::Expression *expression) {
+const IR::Expression* Predication::clone(const IR::Expression* expression) {
   // We often need to clone expressions.  This is necessary because
   // in the end we will generate different code for the different clones of
   // an expression.  This is most obvious if one clone is on the LHS and one
@@ -44,17 +44,16 @@ const IR::Expression *Predication::clone(const IR::Expression *expression) {
   return expression->apply(cloner);
 }
 
-const IR::Node *Predication::postorder(IR::AssignmentStatement *statement) {
+const IR::Node* Predication::postorder(IR::AssignmentStatement* statement) {
   if (!inside_action || ifNestingLevel == 0)
     return statement;
 
-  auto right =
-      new IR::Mux(predicate(), statement->right, clone(statement->left));
+  auto right = new IR::Mux(predicate(), statement->right, clone(statement->left));
   statement->right = right;
   return statement;
 }
 
-const IR::Node *Predication::preorder(IR::IfStatement *statement) {
+const IR::Node* Predication::preorder(IR::IfStatement* statement) {
   if (!inside_action)
     return statement;
 
@@ -67,29 +66,26 @@ const IR::Node *Predication::preorder(IR::IfStatement *statement) {
     ++ifNestingLevel;
   auto rv = new IR::BlockStatement;
   cstring conditionName = generator->newName("cond");
-  auto condDecl =
-      new IR::Declaration_Variable(conditionName, IR::Type::Boolean::get());
+  auto condDecl = new IR::Declaration_Variable(conditionName, IR::Type::Boolean::get());
   rv->push_back(condDecl);
   auto condition = new IR::PathExpression(IR::ID(conditionName));
 
   // A vector for a new BlockStatement.
   auto block = new IR::BlockStatement;
 
-  const IR::Expression *previousPredicate = predicate(); // This may be nullptr
+  const IR::Expression* previousPredicate = predicate();  // This may be nullptr
   // a new name for the new predicate
   cstring newPredName = generator->newName("pred");
   predicateName.push_back(newPredName);
-  auto decl =
-      new IR::Declaration_Variable(newPredName, IR::Type::Boolean::get());
+  auto decl = new IR::Declaration_Variable(newPredName, IR::Type::Boolean::get());
   block->push_back(decl);
   // This evaluates the if condition.
   // We are careful not to evaluate any conditional more times
   // than in the original program, since the evaluation may have side-effects.
-  auto trueCond =
-      new IR::AssignmentStatement(clone(condition), statement->condition);
+  auto trueCond = new IR::AssignmentStatement(clone(condition), statement->condition);
   block->push_back(trueCond);
 
-  const IR::Expression *pred;
+  const IR::Expression* pred;
   if (previousPredicate == nullptr) {
     pred = clone(condition);
   } else {
@@ -124,14 +120,14 @@ const IR::Node *Predication::preorder(IR::IfStatement *statement) {
   return rv;
 }
 
-const IR::Node *Predication::preorder(IR::P4Action *action) {
+const IR::Node* Predication::preorder(IR::P4Action* action) {
   inside_action = true;
   return action;
 }
 
-const IR::Node *Predication::postorder(IR::P4Action *action) {
+const IR::Node* Predication::postorder(IR::P4Action* action) {
   inside_action = false;
   return action;
 }
 
-} // namespace P4
+}  // namespace P4

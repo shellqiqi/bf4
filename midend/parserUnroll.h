@@ -257,7 +257,6 @@ public:
 
     ParserRewriter(ReferenceMap* refMap, TypeMap* typeMap, bool unroll) {
         CHECK_NULL(refMap); CHECK_NULL(typeMap);
-
         passes.push_back(new AnalyzeParser(refMap, &current));
         passes.push_back(new VisitFunctor (
             [this, refMap, typeMap, unroll](const IR::Node* root) -> const IR::Node* {

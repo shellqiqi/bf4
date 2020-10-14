@@ -430,18 +430,9 @@ void ComputeWriteSet::enterScope(const IR::ParameterList* parameters,
                 continue;
             if (p->direction == IR::Direction::In ||
                 p->direction == IR::Direction::InOut ||
-                p->direction == IR::Direction::None) {
-//                LocationSet locationSet;
-//                locationSet.addCanonical(loc);
-//                bool has_locationset = true;
-//                for (auto sl : locationSet) {
-//                    if (!defs->hasLocation(sl->to<BaseLocation>())) {
-//                        has_locationset = false;
-//                        break;
-//                    }
-//                }
+                p->direction == IR::Direction::None)
                 defs->setDefinition(loc, startPoints);
-            } else if (p->direction == IR::Direction::Out)
+            else if (p->direction == IR::Direction::Out)
                 defs->setDefinition(loc, uninit);
             auto valid = loc->getValidBits();
             defs->setDefinition(valid, startPoints);

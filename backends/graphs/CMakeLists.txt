@@ -19,7 +19,8 @@ set (GRAPHS_SRCS
   graphs.cpp
   controls.cpp
   parsers.cpp
-  p4c-graphs.cpp)
+  p4c-graphs.cpp
+  )
 
 set (GRAPHS_HDRS
   graphs.h

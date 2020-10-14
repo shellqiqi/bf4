@@ -17,8 +17,8 @@ limitations under the License.
 #ifndef BACKENDS_BMV2_COMMON_OPTIONS_H_
 #define BACKENDS_BMV2_COMMON_OPTIONS_H_
 
-#include "frontends/common/options.h"
 #include <getopt.h>
+#include "frontends/common/options.h"
 
 namespace BMV2 {
 
@@ -45,10 +45,7 @@ public:
                    "make field lists explicit -> add functions to "
                    "handle them");
     registerOption("--emit-externs", nullptr,
-                   [this](const char *) {
-                     emitExterns = true;
-                     return true;
-                   },
+                   [this](const char*) { emitExterns = true; return true; },
                    "[BMv2 back-end] Force externs be emitted by the backend.\n"
                    "The generated code follows the BMv2 JSON specification.");
     registerOption("--v1-psa", "outfile",
@@ -59,24 +56,17 @@ public:
                    "[BMv2 back-end] Convert V1Model into PSA architecture and "
                    "write resulting program to outfile.");
     registerOption("-o", "outfile",
-                   [this](const char *arg) {
-                     outputFile = arg;
-                     return true;
-                   },
+                   [this](const char* arg) { outputFile = arg; return true; },
                    "Write output to outfile");
     registerOption("--fromJSON", "file",
-                   [this](const char *arg) {
-                     loadIRFromJson = true;
-                     file = arg;
-                     return true;
-                   },
-                   "Use IR representation from JsonFile dumped previously,"
+                   [this](const char* arg) { loadIRFromJson = true; file = arg; return true; },
+                   "Use IR representation from JsonFile dumped previously,"\
                    "the compilation starts with reduced midEnd.");
   }
 };
 
 using BMV2Context = P4CContextWithOptions<BMV2Options>;
 
-}; // namespace BMV2
+};  // namespace BMV2
 
 #endif /* BACKENDS_BMV2_COMMON_OPTIONS_H_ */

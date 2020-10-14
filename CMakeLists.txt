@@ -277,6 +277,7 @@ endif ()
 if (ENABLE_GTESTS)
   add_subdirectory (test)
 endif ()
+
 # IR Generation
 set_source_files_properties(${IR_GENERATOR} PROPERTIES GENERATED TRUE)
 

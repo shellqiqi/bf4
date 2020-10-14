@@ -55,10 +55,10 @@ MidEnd::MidEnd(CompilerOptions& options) {
     refMap.setIsV1(isv1);
     auto evaluator = new P4::EvaluatorPass(&refMap, &typeMap);
     setName("MidEnd");
-    addPasses({evaluator,
-               new VisitFunctor([this, evaluator]() {
-                   toplevel = evaluator->getToplevelBlock();
-               })
+
+    addPasses({
+        evaluator,
+        new VisitFunctor([this, evaluator]() { toplevel = evaluator->getToplevelBlock(); }),
     });
 }
 

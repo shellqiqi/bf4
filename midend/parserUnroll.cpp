@@ -91,7 +91,6 @@ class ParserSymbolicInterpreter {
                                   cstring stateName, ValueMap* values) {
         if (stateName == IR::ParserState::reject)
             return nullptr;
-
         auto state = structure->get(stateName);
         if (stateName == IR::ParserState::accept) {
             auto currentAccept = synthesizedParser->get(stateName);

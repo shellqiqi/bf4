@@ -44,10 +44,8 @@ const IR::Node* HierarchicalNames::postorder(IR::Annotation* annotation) {
     }
 
     cstring newName = "";
-    for (cstring s : stack) {
+    for (cstring s : stack)
         newName += s + ".";
-    }
-
     newName += name;
     LOG2("Changing " << name << " to " << newName);
     annotation = new IR::Annotation(annotation->name, { new IR::StringLiteral(newName) });

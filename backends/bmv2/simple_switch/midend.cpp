@@ -135,4 +135,5 @@ SimpleSwitchMidEnd::SimpleSwitchMidEnd(CompilerOptions& options,
         });
     }
 }
+
 }  // namespace BMV2
