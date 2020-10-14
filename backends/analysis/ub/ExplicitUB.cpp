@@ -2264,7 +2264,7 @@ struct PackVisitor : public boost::static_visitor<packet_method_t> {
         false, ext.x, terminal_t::fresh_mp(), {ext.size, ext.y}));
   }
   packet_method_t shred(packet_method_t &&pm) {
-    return boost::apply_visitor(*this, std::move(pm.data));
+    return boost::apply_visitor(*this, pm.data);
   }
 };
 #undef SAME_METHOD
